@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
+var watchSass = require('gulp-watch-sass');
 var browserSync = require('browser-sync').create();
-var header = require('gulp-header');
 var cleanCSS = require('gulp-clean-css');
 var rename = require("gulp-rename");
 var uglify = require('gulp-uglify');
@@ -10,14 +10,25 @@ var pkg = require('./package.json');
 // Compile sass to css and watch for changes
 gulp.task("sass:watch", () => watchSass([
   "./sass/**/*.{scss,css}",
-  "!./public/libs/**/*"
 ])
   .pipe(sass())
-  .pipe(gulp.dest("./css")));
+  .pipe(gulp.dest("./css"))
+  .pipe(browserSync.reload({
+    stream: true
+  }))
+);
+
+// Watch for changes in files 
+gulp.task('watch', function() {
+    gulp.watch('css/*.css', browserSync.reload);
+    gulp.watch('*.html', browserSync.reload);
+    gulp.watch('js/**/*.js', browserSync.reload);
+    gulp.watch('*.php', browserSync.reload);
+});
 
 // Minify compiled CSS
-gulp.task('minify-css', ['less'], function() {
-    return gulp.src('css/styles.css')
+gulp.task('minify-css', function() {
+    return gulp.src('css/main.css')
         .pipe(cleanCSS({ compatibility: 'ie8' }))
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('css'))
@@ -59,8 +70,17 @@ gulp.task('copy', function() {
         .pipe(gulp.dest('vendor/font-awesome'))
 })
 
+// Configure the browserSync task
+gulp.task('browserSync', function() {
+  browserSync.init({
+      server: {
+          baseDir: ''
+      },
+  })
+})
+
 // Run all tasks by default gulp command
-gulp.task('default', ['sass:watch', 'minify-css', 'minify-js', 'copy']);
+gulp.task('default', ['sass:watch', 'minify-css', 'minify-js', 'copy', 'browserSync', 'watch']);
 
 // Run tasks only needed for dev
-gulp.task('dev', ['sass:watch', 'copy']);
+gulp.task('dev', ['sass:watch', 'copy', 'browserSync', 'watch']);
