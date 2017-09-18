@@ -1,7 +1,7 @@
 {
-  "name": "library-wp",
+  "name": "node-project-starter",
   "version": "1.0.0",
-  "description": "Public library template for Wordpress",
+  "description": "Project template starter using Node, SASS, Gulp, Bootstrap 4, jQuery, Popper.js , Font Awesome and NPM.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,15 +9,16 @@
   "author": "Joshua Mabry",
   "license": "ISC",
   "engines": {
-    "node": "6.9.4",
+    "node": "6.11.2",
     "npm": "3.10.10"
   },
   "dependencies": {
     "bootstrap": "^4.0.0-beta",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
+    "node-static": "^0.7.9",
     "popper.js": "^1.12.5",
-    "node-static": "^0.7.9"
+    "reset-css": "^2.2.1"
   },
   "devDependencies": {
     "browser-sync": "^2.18.13",

@@ -56,8 +56,11 @@ gulp.task('copy', function() {
     gulp.src(['node_modules/jquery/dist/jquery.js', 'node_modules/jquery/dist/jquery.min.js'])
         .pipe(gulp.dest('vendor/jquery'))
 
-    gulp.src(['node_modules/popper.js/dist/popper.js', 'node_modules/popper.js/dist/popper.min.js'])
+    gulp.src(['node_modules/popper.js/dist/**/*'])
         .pipe(gulp.dest('vendor/popper'))
+        
+    gulp.src(['node_modules/reset-css/reset.css'])
+        .pipe(gulp.dest('vendor/reset'))        
 
     gulp.src([
             'node_modules/font-awesome/**',
@@ -81,6 +84,3 @@ gulp.task('browserSync', function() {
 
 // Run all tasks by default gulp command
 gulp.task('default', ['sass:watch', 'minify-css', 'minify-js', 'copy', 'browserSync', 'watch']);
-
-// Run tasks only needed for dev
-gulp.task('dev', ['sass:watch', 'copy', 'browserSync', 'watch']);
